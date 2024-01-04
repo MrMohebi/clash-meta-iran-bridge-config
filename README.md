@@ -2,8 +2,8 @@
 
 ## manual
 ### ports:
-- `sokcs5` and `https`  Proxy on port `1080` ([change the port here...](./docker-compose.yml#L16))
-- `vmess` Proxy on port `8585` ([change the port here...](./docker-compose.yml#L17))
+- `sokcs5` and `https`  Proxy on port `1085` ([change the port here...](./docker-compose.yml#L22))
+- `vmess` Proxy on port `8585` ([change the port here...](./docker-compose.yml#L23))
 
 ### auth:
 - `socks5` authentication is username`root` password:`PASSWORD_SHOULD_BE_CHANGED` ([change user and pass here...](./config.yaml#L63) and [here](./docker-compose.yml#L12)) 
