@@ -1,5 +1,11 @@
 # Clash-Meta iran bridge config
 
+## how to use:
+just clone the project and execute:
+```bash 
+$ docker compose up -d --build
+```
+
 ## manual
 ### ports:
 - `sokcs5` and `https`  Proxy on port `1085` ([change the port here...](./docker-compose.yml#L22))
