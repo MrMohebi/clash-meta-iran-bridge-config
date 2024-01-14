@@ -1,0 +1,78 @@
+
+###################### global #########################
+bind-address: "*"
+
+mode: rule
+log-level: info
+ipv6: true
+
+keep-alive-interval: 30
+find-process-mode: strict
+
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+unified-delay: true
+
+tcp-concurrent: true
+
+global-client-fingerprint: chrome
+
+
+sniffer:
+  enable: false
+
+
+rule-providers:
+  iran_other:
+    type: http
+    behavior: domain
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_other.yaml"
+    path: ./ruleset/iran_other.yaml
+    interval: 432000
+  iran_ads:
+    type: http
+    behavior: domain
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    path: ./ruleset/iran_ads.yaml
+    interval: 432000
+
+
+external-controller: 0.0.0.0:9090
+secret: "API_SECRET"
+
+###################### global #########################
+
+###################### inbound #########################
+
+mixed-port: 5085
+allow-lan: true
+
+###################### inbound #########################
+
+
+proxy-providers:
+  xray-proxy-grabber-telegram_provider:
+    type: http
+    url: "https://raw.githubusercontent.com/MrMohebi/xray-proxy-grabber-telegram/master/collected-proxies/clash-meta/actives_under_1000ms.yaml"
+    interval: 3600
+
+proxy-groups:
+  - name: "proxy"
+    type: url-test
+    url: 'https://www.googleapis.com/books/v1/volumes?q=dummyfsdfsdffsddddddddddfwerw5754sdf'
+    interval: 15
+    lazy: true
+    tolerance: 100
+    use:
+      - xray-proxy-grabber-telegram_provider
+
+rules:
+  - RULE-SET,iran_ads,REJECT
+  - DOMAIN-SUFFIX,ir,DIRECT
+  - RULE-SET,iran_other,DIRECT
+  - GEOIP,IR,DIRECT
+
+  - MATCH,proxy

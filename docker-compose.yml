@@ -1,34 +1,91 @@
 # ports: HOST:CONTAINER
 version: '3.8'
 services:
-    clash-meta:
-        build: .
-        container_name: clash-meta
-        hostname: clash-meta
+    clash-meta-master:
+        image: hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
+        container_name: clash-meta-master
+        hostname: clash-meta-master
         entrypoint: ""
         command: "./clash -f config.yaml"
         restart: unless-stopped
-        healthcheck:
-            test: /validateIp $(curl -s -x socks5://root:PASSWORD_SHOULD_BE_CHANGED@127.0.0.1:1080 --connect-timeout 5 --max-time 4 --retry 3 --retry-delay 0 --retry-max-time 16 ident.me) || kill 1
-            interval: 5s
-            retries: 2
-            start_period: 60s
-            timeout: 20s
         devices:
             - /dev/net/tun
         cap_add:
             - NET_ADMIN
         ports:
-          - "1085:1080" # SOCKS PORT
-          - "8585:8585" # VMESS PORT
-          - "9090:9090" # API PORT
+            - "1085:1080" # SOCKS PORT
+            - "8585:8585" # VMESS PORT
         volumes:
-            - ./config.yaml:/config.yaml
-            - ./validateIp:/root/validateIp
+            - ./config-master.yaml:/config.yaml
 
-    metacubexd:
-        container_name: metacubexd
-        image: ghcr.io/metacubex/metacubexd
-        restart: always
-        ports:
-            - '8085:80'
+
+    clash-meta-slave-1:
+        image: hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
+        container_name: clash-meta-slave-1
+        hostname: clash-meta-slave-1
+        entrypoint: ""
+        command: "./clash -f config.yaml"
+        restart: unless-stopped
+        devices:
+            - /dev/net/tun
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - ./config-slave-1.yaml:/config.yaml
+
+    clash-meta-slave-2:
+        image: hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
+        container_name: clash-meta-slave-2
+        hostname: clash-meta-slave-2
+        entrypoint: ""
+        command: "./clash -f config.yaml"
+        restart: unless-stopped
+        devices:
+            - /dev/net/tun
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - ./config-slave-2.yaml:/config.yaml
+
+    clash-meta-slave-3:
+        image: hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
+        container_name: clash-meta-slave-3
+        hostname: clash-meta-slave-3
+        entrypoint: ""
+        command: "./clash -f config.yaml"
+        restart: unless-stopped
+        devices:
+            - /dev/net/tun
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - ./config-slave-3.yaml:/config.yaml
+
+    clash-meta-slave-4:
+        image: hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
+        container_name: clash-meta-slave-4
+        hostname: clash-meta-slave-4
+        entrypoint: ""
+        command: "./clash -f config.yaml"
+        restart: unless-stopped
+        devices:
+            - /dev/net/tun
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - ./config-slave-4.yaml:/config.yaml
+
+    clash-meta-slave-5:
+        image: hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
+        container_name: clash-meta-slave-5
+        hostname: clash-meta-slave-5
+        entrypoint: ""
+        command: "./clash -f config.yaml"
+        restart: unless-stopped
+        devices:
+            - /dev/net/tun
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - ./config-slave-5.yaml:/config.yaml
+

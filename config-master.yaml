@@ -1,0 +1,132 @@
+
+###################### global #########################
+bind-address: "*"
+
+mode: rule
+log-level: info
+ipv6: true
+
+keep-alive-interval: 30
+find-process-mode: strict
+
+
+tun:
+  enable: true
+  stack: system
+  auto-route: false
+  mtu: 1500
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+unified-delay: true
+
+tcp-concurrent: true
+
+global-client-fingerprint: chrome
+
+
+sniffer:
+  enable: false
+
+
+rule-providers:
+  iran_other:
+    type: http
+    behavior: domain
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_other.yaml"
+    path: ./ruleset/iran_other.yaml
+    interval: 432000
+  iran_ads:
+    type: http
+    behavior: domain
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    path: ./ruleset/iran_ads.yaml
+    interval: 432000
+
+
+#external-controller: 0.0.0.0:9090
+#secret: "API_SECRET"
+
+###################### global #########################
+
+###################### inbound #########################
+
+mixed-port: 1080
+allow-lan: true
+
+authentication:
+  - "root:PASSWORD_SHOULD_BE_CHANGED"
+
+listeners:
+  - name: proxy-not-ir
+    type: vmess
+    port: 8585
+    listen: 0.0.0.0
+    proxy: proxy
+    users:
+      - username: root
+        uuid: 8a43af54-70d4-4b7c-b2db-458daf15e3e5
+        alterId: 1
+
+
+###################### inbound #########################
+
+
+proxies:
+  - name: "slave-1"
+    type: socks5
+    server: clash-meta-slave-1
+    port: 5081
+
+  - name: "slave-2"
+    type: socks5
+    server: clash-meta-slave-2
+    port: 5082
+
+  - name: "slave-3"
+    type: socks5
+    server: clash-meta-slave-3
+    port: 5083
+
+  - name: "slave-4"
+    type: socks5
+    server: clash-meta-slave-4
+    port: 5084
+
+  - name: "slave-5"
+    type: socks5
+    server: clash-meta-slave-5
+    port: 5085
+
+
+
+proxy-groups:
+  - name: "proxy"
+    type: fallback
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 2
+    proxies:
+      - "slave-1"
+      - "slave-2"
+      - "slave-3"
+      - "slave-4"
+      - "slave-5"
+
+rules:
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,198.18.0.0/30,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.1/8,DIRECT,no-resolve
+
+  - RULE-SET,iran_ads,REJECT
+  - DOMAIN-SUFFIX,ir,DIRECT
+  - RULE-SET,iran_other,DIRECT
+  - GEOIP,IR,DIRECT
+
+  - MATCH,proxy

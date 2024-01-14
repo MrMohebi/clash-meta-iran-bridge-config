@@ -10,15 +10,6 @@ keep-alive-interval: 30
 find-process-mode: strict
 
 
-tun:
-  enable: true
-  stack: system
-  auto-route: false
-  mtu: 1500
-  auto-detect-interface: true
-  dns-hijack:
-    - any:53
-
 profile:
   store-selected: true
   store-fake-ip: true
@@ -56,23 +47,8 @@ secret: "API_SECRET"
 
 ###################### inbound #########################
 
-mixed-port: 1080
+mixed-port: 5081
 allow-lan: true
-
-authentication:
-  - "root:PASSWORD_SHOULD_BE_CHANGED"
-
-listeners:
-  - name: proxy-not-ir
-    type: vmess
-    port: 8585
-    listen: 0.0.0.0
-    proxy: proxy
-    users:
-      - username: root
-        uuid: 8a43af54-70d4-4b7c-b2db-458daf15e3e5
-        alterId: 1
-
 
 ###################### inbound #########################
 
@@ -87,19 +63,13 @@ proxy-groups:
   - name: "proxy"
     type: url-test
     url: 'https://www.googleapis.com/books/v1/volumes?q=dummyfsdfsdffsddddddddddfwerw5754sdf'
-    interval: 300
-#    lazy: true
+    interval: 15
+    lazy: true
     tolerance: 100
     use:
       - xray-proxy-grabber-telegram_provider
 
 rules:
-  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
-  - IP-CIDR,198.18.0.0/30,DIRECT,no-resolve
-  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
-  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
-  - IP-CIDR,127.0.0.1/8,DIRECT,no-resolve
-
   - RULE-SET,iran_ads,REJECT
   - DOMAIN-SUFFIX,ir,DIRECT
   - RULE-SET,iran_other,DIRECT
