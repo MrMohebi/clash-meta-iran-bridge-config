@@ -8,10 +8,10 @@ services:
         entrypoint: ""
         command: "/masterRun.sh"
         environment:
-            MASTER_SOCKS_PORT: 1099
+            MASTER_SOCKS_PORT: 1080
             MASTER_SOCKS_USERNAME: root
-            MASTER_SOCKS_PASSWORD: ppppp
-            MASTER_VMESS_PORT: 8080
+            MASTER_SOCKS_PASSWORD: 123456789
+            MASTER_VMESS_PORT: 8585
             MASTER_VMESS_USERNAME: root
             MASTER_VMESS_UUID: 8a43af54-70d4-4b7c-b2db-458daf15e3e5
             SLAVE_PROXIES: socks5://username:pass@clash-meta-slave-1:5001,socks5://username:pass@clash-meta-slave-2:5002,socks5://username:pass@clash-meta-slave-3:5003,socks5://username:pass@clash-meta-slave-4:5004,socks5://username:pass@clash-meta-slave-5:5005
