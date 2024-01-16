@@ -4,6 +4,6 @@
 
 /generateMasterProxies
 
-/appendEnvToYaml config.yaml
+/appendEnvToYaml config-master.yaml
 
-./clash -f config.yaml
+./clash -f config-master.yaml

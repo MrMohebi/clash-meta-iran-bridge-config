@@ -2,6 +2,6 @@
 
 #source /.env.example
 
-/appendEnvToYaml config.yaml
+/appendEnvToYaml config-slave.yaml
 
-./clash -f config.yaml
+./clash -f config-slave.yaml
