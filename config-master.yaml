@@ -10,14 +10,14 @@ keep-alive-interval: 30
 find-process-mode: strict
 
 
-tun:
-  enable: true
-  stack: system
-  auto-route: false
-  mtu: 1500
-  auto-detect-interface: true
-  dns-hijack:
-    - any:53
+#tun:
+#  enable: true
+#  stack: system
+#  auto-route: false
+#  mtu: 1500
+#  auto-detect-interface: true
+#  dns-hijack:
+#    - any:53
 
 profile:
   store-selected: true
@@ -56,16 +56,16 @@ rule-providers:
 
 ###################### inbound #########################
 
-mixed-port: 1080
+mixed-port: 1099
 allow-lan: true
 
 authentication:
-  - "root:PASSWORD_SHOULD_BE_CHANGED"
+  - "root:ppppp"
 
 listeners:
   - name: proxy-not-ir
     type: vmess
-    port: 8585
+    port: 8080
     listen: 0.0.0.0
     proxy: proxy
     users:
@@ -76,33 +76,14 @@ listeners:
 
 ###################### inbound #########################
 
-
-proxies:
-  - name: "slave-1"
-    type: socks5
-    server: clash-meta-slave-1
-    port: 5081
-
-  - name: "slave-2"
-    type: socks5
-    server: clash-meta-slave-2
-    port: 5082
-
-  - name: "slave-3"
-    type: socks5
-    server: clash-meta-slave-3
-    port: 5083
-
-  - name: "slave-4"
-    type: socks5
-    server: clash-meta-slave-4
-    port: 5084
-
-  - name: "slave-5"
-    type: socks5
-    server: clash-meta-slave-5
-    port: 5085
-
+proxy-providers:
+  slaves-provider:
+    type: file
+    path: /slaves-provider.yaml
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 2
 
 
 proxy-groups:
@@ -110,12 +91,8 @@ proxy-groups:
     type: fallback
     url: 'https://www.gstatic.com/generate_204'
     interval: 2
-    proxies:
-      - "slave-1"
-      - "slave-2"
-      - "slave-3"
-      - "slave-4"
-      - "slave-5"
+    use:
+      - slaves-provider
 
 rules:
   - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve

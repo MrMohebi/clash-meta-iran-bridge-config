@@ -40,14 +40,14 @@ rule-providers:
     interval: 432000
 
 
-external-controller: 0.0.0.0:9090
-secret: "API_SECRET"
+#external-controller: 0.0.0.0:9090
+#secret: "API_SECRET"
 
 ###################### global #########################
 
 ###################### inbound #########################
 
-mixed-port: 5081
+mixed-port: ${SLAVE_SOCKS_PORT}
 allow-lan: true
 
 ###################### inbound #########################
