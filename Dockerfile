@@ -18,6 +18,9 @@ COPY --from=builder /app/generateMasterProxies /
 COPY masterRun.sh ./
 COPY slaveRun.sh ./
 
+COPY config-master.yaml ./
+COPY config-slave.yaml ./
+
 RUN chmod +x /generateMasterProxies /appendEnvToYaml /masterRun.sh slaveRun.sh
 
 ENTRYPOINT []
