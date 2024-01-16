@@ -3,19 +3,24 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o validateIp validateIp.go
-
-
+RUN go build -o appendEnvToYaml appendEnvToYaml.go
+RUN go build -o generateMasterProxies generateMasterProxies.go
 
 
 
 FROM hub.hamdocker.ir/metacubex/clash-meta:v1.16.0
 LABEL authors="MMMohebi"
 
-COPY --from=builder /app/validateIp /
-RUN chmod +x /validateIp
+COPY --from=builder /app/appendEnvToYaml /
+COPY --from=builder /app/generateMasterProxies /
 
-RUN apk add curl --no-cache
+#COPY .env.example ./
+COPY masterRun.sh ./
+COPY slaveRun.sh ./
 
+RUN chmod +x /generateMasterProxies /appendEnvToYaml /masterRun.sh slaveRun.sh
 
+ENTRYPOINT []
+
+RUN apk add curl bash --no-cache
 

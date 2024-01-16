@@ -16,7 +16,3 @@ $ docker compose up -d --build
 - `vmess` authentication (username and uuid) also are [here... change them](./config-master.yaml#L72)
 
 generate UUID online [here](https://www.uuidgenerator.net/version4)
-
-
-### Dashboard login:
-To login to the dashboard on port:`8085` use this secret:`API_SECRET` ([also change it here...](./config-master.yaml#L53)) and ip of your server
