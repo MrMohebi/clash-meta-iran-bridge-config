@@ -30,6 +30,8 @@ services:
         command: "/slaveRun.sh"
         environment:
             SLAVE_SOCKS_PORT: 5001
+            SLAVE_SOCKS_USERNAME: username
+            SLAVE_SOCKS_PASSWORD: pass
         restart: unless-stopped
         cap_add:
             - NET_ADMIN
@@ -41,6 +43,8 @@ services:
         command: "/slaveRun.sh"
         environment:
             SLAVE_SOCKS_PORT: 5002
+            SLAVE_SOCKS_USERNAME: username
+            SLAVE_SOCKS_PASSWORD: pass
         restart: unless-stopped
         cap_add:
             - NET_ADMIN
@@ -53,6 +57,8 @@ services:
         command: "/slaveRun.sh"
         environment:
             SLAVE_SOCKS_PORT: 5003
+            SLAVE_SOCKS_USERNAME: username
+            SLAVE_SOCKS_PASSWORD: pass
         restart: unless-stopped
         cap_add:
             - NET_ADMIN
@@ -65,6 +71,8 @@ services:
         command: "/slaveRun.sh"
         environment:
             SLAVE_SOCKS_PORT: 5004
+            SLAVE_SOCKS_USERNAME: username
+            SLAVE_SOCKS_PASSWORD: pass
         restart: unless-stopped
         cap_add:
             - NET_ADMIN
@@ -77,6 +85,8 @@ services:
         command: "/slaveRun.sh"
         environment:
             SLAVE_SOCKS_PORT: 5005
+            SLAVE_SOCKS_USERNAME: username
+            SLAVE_SOCKS_PASSWORD: pass
         restart: unless-stopped
         cap_add:
             - NET_ADMIN

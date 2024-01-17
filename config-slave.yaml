@@ -50,6 +50,9 @@ rule-providers:
 mixed-port: ${SLAVE_SOCKS_PORT}
 allow-lan: true
 
+authentication:
+  - "${SLAVE_SOCKS_USERNAME}:${SLAVE_SOCKS_PASSWORD}"
+
 ###################### inbound #########################
 
 
