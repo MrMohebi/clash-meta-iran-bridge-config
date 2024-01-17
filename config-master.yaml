@@ -10,14 +10,14 @@ keep-alive-interval: 30
 find-process-mode: strict
 
 
-tun:
-  enable: true
-  stack: system
-  auto-route: false
-  mtu: 1500
-  auto-detect-interface: true
-  dns-hijack:
-    - any:53
+#tun:
+#  enable: true
+#  stack: system
+#  auto-route: false
+#  mtu: 1500
+#  auto-detect-interface: true
+#  dns-hijack:
+#    - any:53
 
 profile:
   store-selected: true
@@ -49,49 +49,50 @@ rule-providers:
     interval: 432000
 
 
-external-controller: 0.0.0.0:9090
-secret: "API_SECRET"
+#external-controller: 0.0.0.0:9090
+#secret: "API_SECRET"
 
 ###################### global #########################
 
 ###################### inbound #########################
 
-mixed-port: 1080
+mixed-port: ${MASTER_SOCKS_PORT}
 allow-lan: true
 
 authentication:
-  - "root:PASSWORD_SHOULD_BE_CHANGED"
+  - "${MASTER_SOCKS_USERNAME}:${MASTER_SOCKS_PASSWORD}"
 
 listeners:
   - name: proxy-not-ir
     type: vmess
-    port: 8585
+    port: ${MASTER_VMESS_PORT}
     listen: 0.0.0.0
     proxy: proxy
     users:
-      - username: root
-        uuid: 8a43af54-70d4-4b7c-b2db-458daf15e3e5
+      - username: ${MASTER_VMESS_USERNAME}
+        uuid: ${MASTER_VMESS_UUID}
         alterId: 1
 
 
 ###################### inbound #########################
 
-
 proxy-providers:
-  xray-proxy-grabber-telegram_provider:
-    type: http
-    url: "https://raw.githubusercontent.com/MrMohebi/xray-proxy-grabber-telegram/master/collected-proxies/clash-meta/actives_under_1000ms.yaml"
-    interval: 3600
+  slaves-provider:
+    type: file
+    path: /slaves-provider.yaml
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 2
+
 
 proxy-groups:
   - name: "proxy"
-    type: url-test
-    url: 'https://www.googleapis.com/books/v1/volumes?q=dummyfsdfsdffsddddddddddfwerw5754sdf'
-    interval: 300
-#    lazy: true
-    tolerance: 100
+    type: fallback
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 2
     use:
-      - xray-proxy-grabber-telegram_provider
+      - slaves-provider
 
 rules:
   - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
