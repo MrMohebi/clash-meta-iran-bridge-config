@@ -5,7 +5,6 @@ services:
         build: .
         container_name: clash-meta-master
         hostname: clash-meta-master
-        entrypoint: ""
         command: "/masterRun.sh"
         environment:
             MASTER_SOCKS_PORT: 1080
