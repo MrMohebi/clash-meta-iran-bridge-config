@@ -3,3 +3,5 @@ venv
 .env
 
 slaves-provider.yaml
+
+./temps
