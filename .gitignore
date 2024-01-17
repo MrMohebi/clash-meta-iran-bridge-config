@@ -5,3 +5,8 @@ venv
 slaves-provider.yaml
 
 ./temps
+
+ssl_key.pem
+ssl_cert.pem
+
+ssl_client_cert.pem
