@@ -6,4 +6,4 @@
 
 /appendEnvToYaml config-master.yaml
 
-./clash -f config-master.yaml
+python /code/main.py & ./clash -f config-master.yaml && fg
