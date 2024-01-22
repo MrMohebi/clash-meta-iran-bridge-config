@@ -61,11 +61,17 @@ proxy-providers:
     type: http
     url: "https://raw.githubusercontent.com/MrMohebi/xray-proxy-grabber-telegram/master/collected-proxies/clash-meta/actives_under_1000ms.yaml"
     interval: 3600
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 15
+      expected-status: 204
 
 proxy-groups:
   - name: "proxy"
     type: url-test
-    url: 'https://www.googleapis.com/books/v1/volumes?q=dummyfsdfsdffsddddddddddfwerw5754sdf'
+    url: 'https://www.gstatic.com/generate_204'
+    expected-status: 204/302/200
     interval: 15
     lazy: true
     tolerance: 100
